@@ -8,7 +8,9 @@ This is the backend of the Elbowbump App, build with flask, Python 3.9.1 .
 
 ## Installation
 
-### Heroku
+### ~~Heroku~~
+
+**This might not be necessary anymore since we use github to deploy**
 
 If you got a heroku account, please install heroku on your computer and use the
 
@@ -18,7 +20,7 @@ heroku login
 
 to login to your heroku account.
 
-### Virtual environment setup
+### Virtual Environment Setup
 
 Use "source venv.sh" command or use following command under the root directory of this repo:
 
@@ -32,7 +34,9 @@ source ./venv/bin/activate
 pip install -r requirements.txt
 </pre>
 
-After virtual environment setting is done, next time you can enter virtual environment simply with "source ./venv/bin/activate" or ". ./venv/bin/activate".
+After virtual environment setting is done,   
+next time you can enter virtual environment simply with   
+"source ./venv/bin/activate" or ". ./venv/bin/activate".
 
 ### Test
 
@@ -53,5 +57,10 @@ You can simply use push.sh script to push, or use the following commands:
 <pre>
 git add .
 git commit -m "commit info"
-git push heroku main
+git push
 </pre>
+
+if use heroku CLI, use
+<pre> git push heroku main </pre>
+
+instead of general "git push", but shouldn't going to use that anymore.
