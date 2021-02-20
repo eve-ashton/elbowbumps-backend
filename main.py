@@ -28,7 +28,7 @@ def respond():
 def post_something():
     param = request.form.get('name')
     print(param)
-    
+
     # You can add the test cases you made in the previous function, but in our case here you are just testing the POST functionality
     if param:
         return jsonify({
@@ -39,6 +39,45 @@ def post_something():
     else:
         return jsonify({
             "ERROR": "no name found, please send a name."
+        })
+
+# Updates interests for a given user
+@app.route('/update_interests/', methods=['POST'])
+def update_interests():
+    param = request.args.get('user_id', None)
+    print(param)
+    response = {}
+
+    # TODO: check if user exists in database
+
+    if (param):
+        response["STATUS_CODE"] = 200
+        response["MESSAGE"] = f"User {param} has been updated"
+    else:
+        response["STATUS_CODE"] = 500
+        response["MESSAGE"] = "Please provide a user id"
+    return jsonify(response)
+
+# Gets recommendations for a given user
+@app.route('/get_recs_for/', methods=['GET'])
+def get_recs_for():
+    param = request.args.get('user_id')
+    test_user = "345"
+    fake_users = ["556", "223"]
+    if (param == test_user):
+        return jsonify({
+            "recommendations": fake_users,
+            "STATUS_CODE": "200"
+        })
+    elif (param == None):
+        return jsonify({
+            "STATUS_CODE": "500",
+            "Message": "Please provide a user id"
+        })
+    else:
+        return jsonify({
+            "STATUS_CODE": "500",
+            "Message": "Please ensure user exists in database"
         })
 
 # A welcome message to test our server
