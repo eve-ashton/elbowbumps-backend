@@ -28,7 +28,7 @@ def respond():
 def post_something():
     param = request.form.get('name')
     print(param)
-    
+
     # You can add the test cases you made in the previous function, but in our case here you are just testing the POST functionality
     if param:
         return jsonify({
@@ -57,6 +57,31 @@ def update_interests():
         response["STATUS_CODE"] = 500
         response["MESSAGE"] = "Please provide a user id"
     return jsonify(response)
+
+
+@app.route('/get_recs_for/', methods=['POST'])
+def get_recs_for():
+    param = request.args.get('user_id')
+    test_user = "345"
+    fake_user = "556"
+    fake_user1 = "223"
+    if (param == test_user):
+        return jsonify({
+        "recommendations": [fake_user, fake_user1],
+        "STATUS_CODE": "200"
+        })
+    else:
+        return jsonify({
+        "STATUS_CODE": "500",
+        "Message": "User not found"
+        })
+
+
+
+
+
+
+
 
 # A welcome message to test our server
 @app.route('/')
