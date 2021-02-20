@@ -58,30 +58,27 @@ def update_interests():
         response["MESSAGE"] = "Please provide a user id"
     return jsonify(response)
 
-
-@app.route('/get_recs_for/', methods=['POST'])
+# Gets recommendations for a given user
+@app.route('/get_recs_for/', methods=['GET'])
 def get_recs_for():
     param = request.args.get('user_id')
     test_user = "345"
-    fake_user = "556"
-    fake_user1 = "223"
+    fake_users = ["556", "223"]
     if (param == test_user):
         return jsonify({
-        "recommendations": [fake_user, fake_user1],
-        "STATUS_CODE": "200"
+            "recommendations": fake_users,
+            "STATUS_CODE": "200"
+        })
+    elif (param == None):
+        return jsonify({
+            "STATUS_CODE": "500",
+            "Message": "Please provide a user id"
         })
     else:
         return jsonify({
-        "STATUS_CODE": "500",
-        "Message": "User not found"
+            "STATUS_CODE": "500",
+            "Message": "Please ensure user exists in database"
         })
-
-
-
-
-
-
-
 
 # A welcome message to test our server
 @app.route('/')
