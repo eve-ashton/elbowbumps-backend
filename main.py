@@ -41,6 +41,23 @@ def post_something():
             "ERROR": "no name found, please send a name."
         })
 
+# Updates interests for a given user
+@app.route('/update_interests/', methods=['POST'])
+def update_interests():
+    param = request.args.get('user_id', None)
+    print(param)
+    response = {}
+
+    # TODO: check if user exists in database
+
+    if (param):
+        response["STATUS_CODE"] = 200
+        response["MESSAGE"] = f"User {param} has been updated"
+    else:
+        response["STATUS_CODE"] = 500
+        response["MESSAGE"] = "Please provide a user id"
+    return jsonify(response)
+
 # A welcome message to test our server
 @app.route('/')
 def index():
