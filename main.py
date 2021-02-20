@@ -1,6 +1,11 @@
 from flask import Flask, request, jsonify
 app = Flask(__name__)
+from flask_sqlalchemy import SQLAlchemy
 import elbowbumps.auth
+db = SQLAlchemy(app)
+from elbowbumps.models import UserData
+
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 @app.route('/getmsg/', methods=['GET'])
 def respond():
@@ -81,11 +86,32 @@ def get_recs_for():
             "Message": "Please ensure user exists in database"
         })
 
+# Test endpoint - an example of how to make a transaction
+@app.route('/test_user', methods=['POST'])
+def create_test_user():
+    from random import randint
+    user = UserData('Faridz','Ibrahim',19,f'{randint(0, 6000)}','test','M')
+    db.session.add(user)
+    db.session.commit()
+    return jsonify({
+        'STATUS_CODE': '200',
+        "Message": 'User added'
+    })
+
 # A welcome message to test our server
 @app.route('/')
 def index():
     return "<h1>Welcome to our server !!</h1>"
 
 if __name__ == '__main__':
+    ENV = 'staging'
+    if ENV == 'dev':
+        app.debug = True
+        # Change the line below to your own local database for testing purposes
+        app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:123@localhost/elbow_bumps"
+    else:
+        app.debug = False
+        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
     # Threaded option to enable multiple instances for multiple user access support
+    db.create_all()
     app.run(threaded=True, port=5000)
