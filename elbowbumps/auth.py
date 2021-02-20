@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify
+from __main__ import app
 
 @app.route('/register', methods=('GET', 'POST'))
 def register():

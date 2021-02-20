@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 app = Flask(__name__)
+import elbowbumps.auth
 
 @app.route('/getmsg/', methods=['GET'])
 def respond():
