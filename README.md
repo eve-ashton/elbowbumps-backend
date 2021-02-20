@@ -22,6 +22,7 @@ to login to your heroku account.
 
 ### Virtual Environment Setup
 
+## Linux
 Use "source venv.sh" command or use following command under the root directory of this repo:
 
 <pre>
@@ -38,6 +39,19 @@ After virtual environment setting is done,
 next time you can enter virtual environment simply with   
 "source ./venv/bin/activate" or ". ./venv/bin/activate".
 
+## Windows
+The commands are slightly different on Windows to set up the virtual environment.  
+Again, on the root directory of this repo:
+
+<pre>
+pip install virtualenv
+
+python -m virtualenv venv
+
+./venv/Scripts/activate
+
+pip install -r requirements.txt
+</pre>
 ### Test
 
 Then you can try to run main.py on your local machine to test:
