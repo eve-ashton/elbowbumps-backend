@@ -139,7 +139,7 @@ if __name__ == '__main__':
         app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:123@localhost"
     else:
         app.debug = False
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://lrrucystcdokqx:8dcdf77fcf5031f6d6bf22e181e8e526fc69393bae3bbaed0065588c2963f6fb@ec2-54-198-73-79.compute-1.amazonaws.com:5432/da8ahn3kepucis'
+        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URI')
     # Threaded option to enable multiple instances for multiple user access support
     db.create_all()
     app.run(threaded=True, port=5000)
