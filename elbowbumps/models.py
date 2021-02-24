@@ -19,7 +19,7 @@ class UserData(db.Model):
         self.ud_email = email
         self.ud_password = password
         self.ud_gender = gender
-        self.ud_twitter = ''
+        self.ud_twitter = twitter
     
     def serialise(self):
         return {
@@ -31,3 +31,18 @@ class UserData(db.Model):
             'gender': self.ud_gender,
             'twitter': self.ud_twitter
         }
+
+class UserInterestData(db.Model):
+    __tablename__ = 'user_interest_data'
+
+    uid_id = db.Column(db.Integer, primary_key=True)
+    uid_ud_id = db.Column(db.Integer)
+    uid_interest_type = db.Column(db.String(50))
+    uid_interest_weight = db.Column(db.Float(10))
+    uid_squared_weight = db.Column(db.Float(10))
+
+    def __init__(self, ud_id, interest_type, interest_weight):
+        self.uid_ud_id = ud_id
+        self.uid_interest_type = interest_type
+        self.uid_interest_weight = interest_weight
+        self.uid_squared_weight = interest_weight * interest_weight
