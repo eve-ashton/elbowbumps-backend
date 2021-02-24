@@ -132,7 +132,7 @@ def index():
     return "<h1>Welcome to our server !!</h1>"
 
 if __name__ == '__main__':
-    ENV = 'dev'
+    ENV = 'live'
     if ENV == 'dev':
         app.debug = True
         # Change the line below to your own local database for testing purposes
