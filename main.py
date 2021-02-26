@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify
 app = Flask(__name__)
 from flask_sqlalchemy import SQLAlchemy
 import elbowbumps.auth
+from elbowbumps.twitter_scraper import getTweets
 db = SQLAlchemy(app)
 from elbowbumps.models import UserData, UserInterestData
 
@@ -114,11 +115,24 @@ def get_recs_for():
             "Message": "Please ensure user exists in database"
         })
 
+@app.route('/get_tweets', methods=['POST'])
+def get_tweets():
+    user_id = request.args.get('user_id')
+    category = request.args.get('category')
+    user = UserData.query.filter_by(ud_id=user_id).first()
+    score = getTweets(user.ud_twitter, category)
+    data = UserInterestData(user_id, category, score)
+    db.session.add(data)
+    db.session.commit()
+    return jsonify({
+        'status_code': '200'
+    })
+
 # Test endpoint - an example of how to make a transaction
 @app.route('/test_user', methods=['POST'])
 def create_test_user():
     from random import randint
-    user = UserData('Faridz','Ibrahim',19,f'{randint(0, 6000)}','test','M','test3')
+    user = UserData('Faridz','Ibrahim',19,f'{randint(0, 6000)}','test','M','elbowbumps')
     db.session.add(user)
     db.session.commit()
     return jsonify({
@@ -132,7 +146,7 @@ def index():
     return "<h1>Welcome to our server !!</h1>"
 
 if __name__ == '__main__':
-    ENV = 'live'
+    ENV = 'dev'
     if ENV == 'dev':
         app.debug = True
         # Change the line below to your own local database for testing purposes

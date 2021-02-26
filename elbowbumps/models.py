@@ -10,7 +10,7 @@ class UserData(db.Model):
     ud_email = db.Column(db.String(50), unique=True)
     ud_password = db.Column(db.String(100))
     ud_gender = db.Column(db.Enum('M', 'F', 'NB', name='gender'))
-    ud_twitter = db.Column(db.String(50), unique=True)
+    ud_twitter = db.Column(db.String(50))
 
     def __init__(self, forename, surname, birthyear, email, password, gender, twitter=''):
         self.ud_forename = forename

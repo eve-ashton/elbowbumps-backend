@@ -3,11 +3,16 @@ from __main__ import app
 
 @app.route('/register', methods=('GET', 'POST'))
 def register():
-    reg_data = {}
+    
+    forename = request.args.get('forename')
+    surname = request.args.get('surname')
     if request.method == 'POST':
         #TODO: register new accound
         print('register')
-    return jsonify(reg_data)
+    return jsonify({
+        'forename': forename,
+        'surname': surname
+    })
 
 @app.route('/login', methods=('GET', 'POST'))
 def login():
