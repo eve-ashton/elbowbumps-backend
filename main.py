@@ -80,6 +80,37 @@ def add_interest_score():
         'MESSAGE': 'row added successfully'
     })
 
+@app.route('/questionnaire', methods=['POST'])
+def add_questionnaire_scores():
+    score = request.form.get('basketballScore')    # will end up being a list, probably, when we have multiple scores instrad of one
+    id = request.args.get('user_id')
+    interest = UserInterestData(id, 'Basketball', int(score))   # may have to change up the numbers to fit with twitter scores
+    db.session.add(interest)
+    db.session.commit()
+    return jsonify({
+        'STATUS_CODE': 200,
+        'MESSAGE': 'row added successfully'
+    })
+
+@app.route('/social_media_info', methods=['POST'])      # updating record to fill in the questionnaire score in the database - Lily
+def add_twitter_username():
+    twitter = request.form.get('twitterUsername')
+    id = request.args.get('user_id')
+    db.session.filter_by(user_id = id)
+    db.session.update({'ud_twitter': twitter})
+    db.session.commit()
+    if (twitter == ""):
+        return jsonify({
+            "STATUS_CODE": "500",
+            "Message": "Please provide a twitter username"
+        })
+    else:
+        return jsonify({
+            "STATUS_CODE": "200",
+            "Message": "Thank you!"
+        })
+
+
 # finds nearest neighbours for a given user
 @app.route('/find_matches', methods=['GET'])
 def find_matches():
